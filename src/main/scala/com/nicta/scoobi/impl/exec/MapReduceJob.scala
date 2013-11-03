@@ -18,7 +18,7 @@ package impl
 package exec
 
 import org.apache.commons.logging.LogFactory
-import org.apache.hadoop.mapred.{JobConf, TaskCompletionEvent}
+import org.apache.hadoop.mapred.{JobConf}
 import org.apache.hadoop.mapreduce._
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat
 import org.apache.hadoop.io.{WritableComparable, WritableComparator, RawComparator}
@@ -288,7 +288,7 @@ class TaskDetailsLogger(job: Job) {
         val logUrl = createTaskLogUrl(taskCompEvent.getTaskTrackerHttp, taskAttemptId.toString)
         val taskAttempt = "Task attempt '"+taskAttemptId+"'"
         val moreInfo = " Please see "+logUrl+" for task attempt logs"
-        taskCompEvent.getTaskStatus match {
+        taskCompEvent.getStatus match {
           case OBSOLETE  => logger.debug(taskAttempt + " was made obsolete." + moreInfo)
           case FAILED    => logger.info(taskAttempt + " failed! " + "Trying again." + moreInfo)
           case KILLED    => logger.debug(taskAttempt + " was killed!" + moreInfo)
